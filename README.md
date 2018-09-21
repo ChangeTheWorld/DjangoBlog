@@ -112,7 +112,7 @@ server {
 
     location / { ③
         proxy_set_header Host $host;
-        proxy_pass /website/DjangoBlog/collectedstatic;   ##gunicorn server process
+        proxy_pass http://unix:/tmp/website.socket;   ##gunicorn server process
     }
 }
 ```

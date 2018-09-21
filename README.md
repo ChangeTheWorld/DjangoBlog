@@ -85,8 +85,19 @@ CREATE DATABASE `djangoblog` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8
  执行：
  `./manage.py runserver`
 
+### PM2 部署
+终端下执行：
+apt-get install npm
+npm install pm2 -g
+安装gunicorn(在前面建立的env环境中)
+pip install gunicorn
+建立start.sh 内容如下（请按照你的实际目录来）
+source /website/DjangoBlog_env/bin/activate
+gunicorn --bind unix:/tmp/website.socket DjangoBlog.wsgi:application
+chmod +x start.sh
+简单的pm2 start start.sh即可运行
 
-
+### ngnix配置
 
 
  浏览器打开: http://127.0.0.1:8000/  就可以看到效果了。

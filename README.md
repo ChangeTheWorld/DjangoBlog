@@ -97,8 +97,25 @@ gunicorn --bind unix:/tmp/website.socket DjangoBlog.wsgi:application
 chmod +x start.sh
 简单的pm2 start start.sh即可运行
 
-### ngnix配置
+### Ngnix配置
+```
+/etc/nginx/sites-available/example.com   ##replace domain
 
+server {
+    charset utf-8;
+    listen 80;
+    server_name example.com; ①
+
+    location /static { ②
+        alias /website/DjangoBlog/collectedstatic;  ## replace too
+    }
+
+    location / { ③
+        proxy_set_header Host $host;
+        proxy_pass /website/DjangoBlog/collectedstatic;   ##gunicorn server process
+    }
+}
+```
 
  浏览器打开: http://127.0.0.1:8000/  就可以看到效果了。
 ## 更多配置:
